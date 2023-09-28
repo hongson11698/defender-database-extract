@@ -1,0 +1,36 @@
+-- Decompiled using luadec 2.2 rev: 895d923 for Lua 5.1 from https://github.com/viruscamp/luadec
+-- Command line: db 092023\as_db\lua\!InfrastructureShared\Unknowcategory\0x0000809d_luac 
+
+-- params : ...
+-- function num : 0
+if not (this_sigattrlog[1]).matched or not (this_sigattrlog[2]).matched then
+  return mp.CLEAN
+end
+if not (this_sigattrlog[1]).wp2 or not (this_sigattrlog[2]).utf8p1 then
+  return mp.CLEAN
+end
+local l_0_0 = (mp.utf16to8)((this_sigattrlog[1]).wp2)
+local l_0_1 = (this_sigattrlog[2]).utf8p1
+if #l_0_1 <= #l_0_0 or (string.sub)(l_0_1, -#l_0_0) ~= l_0_0 then
+  return mp.CLEAN
+end
+if not (sysio.IsFileExists)(l_0_1) then
+  return mp.CLEAN
+end
+if (versioning.GetCloudBlockLevel)() == 4 then
+  (mp.TriggerScanResource)("taskscheduler", l_0_1)
+end
+if (MpCommon.GetPersistContextCountNoPath)("bm_ipc_taskschd") > 0 then
+  local l_0_2 = (MpCommon.GetPersistContextNoPath)("bm_ipc_taskschd")
+  for l_0_6,l_0_7 in ipairs(l_0_2) do
+    local l_0_8, l_0_9, l_0_10 = (string.match)(l_0_7, "([%w%p]+);([%w%p]+);([%w%p]+)")
+    ;
+    (mp.ReportLowfi)(l_0_10, tonumber(l_0_9))
+  end
+end
+do
+  l_0_2 = mp
+  l_0_2 = l_0_2.CLEAN
+  return l_0_2
+end
+

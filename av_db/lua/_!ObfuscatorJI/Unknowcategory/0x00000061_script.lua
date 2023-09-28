@@ -1,0 +1,28 @@
+-- Decompiled using luadec 2.2 rev: 895d923 for Lua 5.1 from https://github.com/viruscamp/luadec
+-- Command line: db 092023\av_db\lua\_!ObfuscatorJI\Unknowcategory\0x00000061_luac 
+
+-- params : ...
+-- function num : 0
+if pehdr.NumberOfSections <= 5 then
+  return mp.CLEAN
+end
+if peattributes.isexe ~= true then
+  return mp.CLEAN
+end
+if (pesecs[1]).SizeOfRawData ~= 0 then
+  return mp.CLEAN
+end
+if (mp.readu_u32)(headerpage, 433) ~= 2048 then
+  return mp.CLEAN
+end
+;
+(mp.readprotection)(false)
+local l_0_0 = (mp.readfile)((mp.readu_u32)(headerpage, 437), 1280)
+if (mp.crc32)(-1, l_0_0, 1, 240) ~= 1584319641 then
+  return mp.CLEAN
+end
+if (mp.crc32)(-1, l_0_0, 273, 768) ~= 2930427897 then
+  return mp.CLEAN
+end
+return mp.INFECTED
+
