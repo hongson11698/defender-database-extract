@@ -799,7 +799,6 @@ int main(int argc, char *argv[])
 {
     if (argc < 3)
     {
-        
         printf("\nUsage:");
         printf("\n%s out_folder vdm_base [vdm_dlta] ", argv[0]);
         printf("\nEg.");
@@ -851,12 +850,18 @@ int main(int argc, char *argv[])
     unsigned char *pehstr_buf = (unsigned char *)malloc(536870912);  
     unsigned char *threatBegin = NULL;
     // to lazyyy
-
+    char* filename = strrchr(file_path, DIR_SEPARATOR);
+    if (filename == NULL) {
+        filename = file_path;
+    }
+    else {
+        filename += 1;
+    }
     std::filesystem::create_directories(out_folder);
-    sprintf(sig_out_file, "%s%c%s.csv", out_folder, DIR_SEPARATOR, strrchr(file_path, DIR_SEPARATOR) + 1);
-    sprintf(pehstr_sig_out_file, "%s%cthreat_only_pehstr_%s.csv", out_folder, DIR_SEPARATOR, strrchr(file_path, DIR_SEPARATOR) + 1);
-    sprintf(lua_sign_out_file, "%s%clua_standalone_sig_%s.csv", out_folder, DIR_SEPARATOR, strrchr(file_path, DIR_SEPARATOR) + 1);
-    sprintf(friendly_sign_out_file, "%s%cfriendly_hash_sig_%s.csv", out_folder, DIR_SEPARATOR, strrchr(file_path, DIR_SEPARATOR) + 1);
+    sprintf(sig_out_file, "%s%c%s.csv", out_folder, DIR_SEPARATOR, filename);
+    sprintf(pehstr_sig_out_file, "%s%cthreat_only_pehstr_%s.csv", out_folder, DIR_SEPARATOR, filename);
+    sprintf(lua_sign_out_file, "%s%clua_standalone_sig_%s.csv", out_folder, DIR_SEPARATOR, filename);
+    sprintf(friendly_sign_out_file, "%s%cfriendly_hash_sig_%s.csv", out_folder, DIR_SEPARATOR, filename);
 
     
     if (argc == 3)
